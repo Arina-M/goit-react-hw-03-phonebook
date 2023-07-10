@@ -24,10 +24,20 @@ export class App extends Component {
     }
   };
 
+  
+
   // функція отримання даних з поля filter
   changeFilter = event => {
     this.setState({ filter: event.currentTarget.value });
   };
+
+    // зчитування зі сховища
+    componentDidMount() {
+      const contactsData = JSON.parse(localStorage.getItem('contacts'));
+      if (contactsData) {
+        this.setState({ contacts: contactsData });
+      }
+    }
 
   // функція видалення контакту зі списку
   deleteContact = Id => {
@@ -35,14 +45,6 @@ export class App extends Component {
       contacts: this.state.contacts.filter(contact => contact.id !== Id),
     });
   };
-
-  // зчитування зі сховища
-  componentDidMount() {
-    const contactsData = JSON.parse(localStorage.getItem('contacts'));
-    if (contactsData) {
-      this.setState({ contacts: contactsData });
-    }
-  }
 
   // запис до сховища
   componentDidUpdate(_, prevState) {
